@@ -117,8 +117,8 @@
             function ping() {
                 const pingOscillator = audioContext.createOscillator();
                 pingOscillator.type = "triangle"; // Zachter, maar duidelijker
-                pingOscillator.frequency.setValueAtTime(referenceFrequency/2, audioContext.currentTime);
-                pingOscillator.frequency.exponentialRampToValueAtTime(referenceFrequency*4+40, audioContext.currentTime + 0.1); // Scherpe shift omhoog
+                pingOscillator.frequency.setValueAtTime(referenceFrequency*2+40, audioContext.currentTime);
+                pingOscillator.frequency.exponentialRampToValueAtTime(referenceFrequency*2+40, audioContext.currentTime + 0.1); // Scherpe shift omhoog
 
                 const pingGain = audioContext.createGain();
                 pingGain.gain.setValueAtTime(volume*4, audioContext.currentTime);
