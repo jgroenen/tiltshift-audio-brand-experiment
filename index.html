@@ -37,8 +37,9 @@
             width: 164px;
             height: 170px;
             border: 6px solid #0057B8;
-            transition: transform 0.01s linear;
+            /* transition: transform 0.1s linear; */
             opacity: 0;
+            /* transform: translate(20px, 7px) rotate(6deg); */
         }
 
         .white-block-bl {
@@ -100,7 +101,7 @@
                 const buzzOscillator = audioContext.createOscillator();
                 buzzOscillator.type = "sawtooth"; // Ruwere toon, meer magnetron-achtig
                 buzzOscillator.frequency.setValueAtTime(referenceFrequency/8, audioContext.currentTime);
-                buzzOscillator.frequency.exponentialRampToValueAtTime(referenceFrequency/2, audioContext.currentTime + 0.5); // Glide omhoog
+                //buzzOscillator.frequency.exponentialRampToValueAtTime(referenceFrequency/2, audioContext.currentTime + 0.5); // Glide omhoog
                 
                 const buzzGain = audioContext.createGain();
                 buzzGain.gain.setValueAtTime(volume/100, audioContext.currentTime);
@@ -140,14 +141,11 @@
         const soundMachine = new SoundMachine();
 
         function playBuzzAndPing() {
-            const blueFrame = document.querySelector(".blue-frame");
-
-            // Zet de fade-in animatie
-            blueFrame.style.opacity = "1";
-
             soundMachine.plok();
+            const frame = document.querySelector(".blue-frame");
+            frame.style.opacity = "1";
 
-            // Start geluid en animatie pas NA de fade-in (1s vertraging)
+            // Start geluid en animatie pas na de fade-in (1s vertraging)
             setTimeout(() => { startAnimationAndSound(); }, 1000); // Wacht 1 seconde tot de fade-in klaar is
         }
 
@@ -167,10 +165,9 @@
                 let blockEnergyY = (Math.random() - 0.5) * energy;
                 let blockEnergyAngle = (Math.random() - 0.5) * energy/2;
                 block.style.transform = `translate(${blockEnergyX}px, ${blockEnergyY}px) rotate(${blockEnergyAngle}deg)`;
-
-                let frameEnergyX = energy + (Math.random() - 0.5) * energy;
-                let frameEnergyY = energy/2 + (Math.random() - 0.5) * energy;
-                let frameEnergyAngle = Math.random() * energy;
+                let frameEnergyX = (Math.random() - 0.5) * 10 * Math.floor(energy / 10);
+                let frameEnergyY = (Math.random() - 0.5) * 7 * Math.floor(energy / 7);
+                let frameEnergyAngle = (Math.random() - 0.5) * 6 * Math.floor(energy / 6);
                 frame.style.transform = `translate(${frameEnergyX}px, ${frameEnergyY}px) rotate(${frameEnergyAngle}deg)`;
             }, 50);
 
@@ -180,7 +177,7 @@
                 soundMachine.ping();
 
                 // CSS-versie verbergen, echte logo tonen
-                frame.style.transform = "rotate(6deg) translate(20px, 6px)";
+                frame.style.transform = "rotate(6deg) translate(20px, 7px)";
                 block.style.transform = "rotate(0) translate(0px, 0px)";
                 document.querySelector(".tiltshift-animation").style.display = "none";
                 document.getElementById("tiltshift-logo").style.display = "block";
